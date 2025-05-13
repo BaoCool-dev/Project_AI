@@ -1,0 +1,39 @@
+=== Algorithm Performance Info ===
+
+Algorithm: And-Or Tree
+  Run 1:
+    Steps: 2
+    States Explored: 9
+    Runtime: 0.24 ms
+    Path Length: 3
+
+Algorithm: Belief
+  Run 1:
+    Steps: 1
+    States Explored: 10
+    Runtime: 0.86 ms
+    Path Length: 1
+  Run 2:
+    Steps: 1
+    States Explored: 10
+    Runtime: 0.58 ms
+    Path Length: 1
+  Run 3:
+    Steps: 1
+    States Explored: 10
+    Runtime: 0.47 ms
+    Path Length: 1
+  Run 4:
+    Steps: 1
+    States Explored: 16
+    Runtime: 0.75 ms
+    Path Length: 1
+
+Algorithm: POS
+  Run 1:
+    Steps: 3
+    States Explored: 122
+    Runtime: 5.23 ms
+    Path Length: 3
+
+================================
