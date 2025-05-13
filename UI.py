@@ -51,39 +51,39 @@ class UI:
                          bg="#FFFFFF", fg="#FF0000")
         title.pack(pady=10)
 
-        main_frame = tk.Frame(self.root, bg="#FFFFE0")
+        main_frame = tk.Frame(self.root, bg="#FFFFFF")
         main_frame.pack(pady=5, padx=10)
         self._setup_puzzle_boards(main_frame)
         self._setup_algorithm_buttons()
 
     def _setup_puzzle_boards(self, main_frame):
-        puzzle_frame = tk.Frame(main_frame, bg="#FFFFE0", bd=2, relief=tk.SUNKEN)
+        puzzle_frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
         puzzle_frame.grid(row=0, column=0, padx=10, pady=5)
 
         self.cells = [tk.Label(puzzle_frame,text="" if self.puzzle_numbers[i] == 0 else str(self.puzzle_numbers[i]),
-                               width=5, height=2, font=("Comic Sans MS", 18, "bold"), bg="#33ACFF",
+                               width=5, height=2, font=("Comic Sans MS", 18, "bold"), bg="#E1BEE7",
                                fg="#E83D30", relief=tk.RAISED, borderwidth=2)
                       for i in range(9)]
         for i, cell in enumerate(self.cells):
             cell.grid(row=i // 3, column=i % 3, padx=2, pady=2)
 
-        goal_frame = tk.Frame(main_frame, bg="#FFFFE0", bd=2, relief=tk.SUNKEN)
+        goal_frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
         goal_frame.grid(row=0, column=1, padx=20, pady=10)
 
         goal_cells = [tk.Label(goal_frame, text="" if self.goal_state[i] == 0 else str(self.goal_state[i]),
-                               width=5, height=2, font=("Comic Sans MS", 18, "bold"), bg="#33ACFF",
+                               width=5, height=2, font=("Comic Sans MS", 18, "bold"), bg="#E1BEE7",
                                fg="#E83D30", relief=tk.RAISED, borderwidth=2)
                       for i in range(9)]
         for i, cell in enumerate(goal_cells):
             cell.grid(row=i // 3, column=i % 3, padx=2, pady=2)
 
         tk.Label(main_frame, text="Initial State", font=("Comic Sans MS", 14, "bold"),
-                 bg="#FFFFE0", fg="#00FF00").grid(row=1, column=0)
+                 bg="#FFFFFF", fg="#00FF00").grid(row=1, column=0)
         tk.Label(main_frame, text="Goal State", font=("Comic Sans MS", 14, "bold"),
-                 bg="#FFFFE0", fg="#00FF00").grid(row=1, column=1)
+                 bg="#FFFFFF", fg="#00FF00").grid(row=1, column=1)
 
     def _setup_algorithm_buttons(self):
-        button_frame = tk.Frame(self.root, bg="#f0f0f0")
+        button_frame = tk.Frame(self.root, bg="#F8BBD0")
         button_frame.pack(pady=10)
 
         style = ttk.Style()
