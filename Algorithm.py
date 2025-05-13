@@ -98,23 +98,23 @@ class algorithm:
                     explored_states.append(successor)
         return None, explored_states
 
-    def dfs(self, timeout=10.0):
-        """Depth-First Search."""
+    def dfs(self, timeout=30.0, max_depth=20):
         start_time = time.time()
-        stack = [(self.initial_state, [])]
+        stack = [(self.initial_state, [], 0)]  # Thêm độ sâu vào stack
         visited = {tuple(self.initial_state)}
         explored_states = [self.initial_state]
         while stack:
             if time.time() - start_time > timeout:
                 return None, explored_states
-            state, path = stack.pop()
+            state, path, depth = stack.pop()
             if self.is_goal(state):
                 return path + [state], explored_states
-            for neighbor in self.get_successors(state):
-                if tuple(neighbor) not in visited:
-                    visited.add(tuple(neighbor))
-                    stack.append((neighbor, path + [state]))
-                    explored_states.append(neighbor)
+            if depth < max_depth:  # Kiểm tra độ sâu
+                for neighbor in self.get_successors(state):
+                    if tuple(neighbor) not in visited:
+                        visited.add(tuple(neighbor))
+                        stack.append((neighbor, path + [state], depth + 1))
+                        explored_states.append(neighbor)
         return None, explored_states
 
     def ucs(self, timeout=10.0):

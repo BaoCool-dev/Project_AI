@@ -7,7 +7,8 @@ import time
 
 class Main:
     def __init__(self):
-        self.initial_state = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        #self.initial_state = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        self.initial_state = [0, 1, 3, 4, 2, 5, 7, 8, 6]
         self.algorithm = algorithm(self.initial_state)
         self.ui = UI(self)
         self.performance_history = {
@@ -39,7 +40,7 @@ class Main:
     def run_algorithm(self, algorithm_name, initial_belief=None):
         algorithm_map = {
             "BFS": self.algorithm.bfs,
-            "DFS": self.algorithm.dfs,
+            "DFS": lambda: self.algorithm.dfs(timeout=30.0, max_depth=20),
             "UCS": self.algorithm.ucs,
             "IDS": self.algorithm.ids,
             "A*": self.algorithm.a_star,

@@ -13,7 +13,8 @@ class UI:
         self.root.attributes('-fullscreen', True)
         self.algorithm_handler = algorithm_handler
         self.root.configure(bg="#f0f0f0")
-        self.puzzle_numbers = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        #self.puzzle_numbers = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        self.puzzle_numbers =  [0, 1, 3, 4, 2, 5, 7, 8, 6]
         self.cells = []
         self.goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         self.after_ids = []
@@ -169,7 +170,8 @@ class UI:
 
     def on_restart(self):
         self.cancel_animation()
-        self.puzzle_numbers = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        #self.puzzle_numbers = [1, 2, 3, 4, 0, 6, 7, 5, 8]
+        self.puzzle_numbers =  [0, 1, 3, 4, 2, 5, 7, 8, 6]
         self.update_puzzle_board(self.puzzle_numbers)
 
     def solve_backtrack(self, algorithm):
@@ -304,7 +306,7 @@ class UI:
 
         if not isinstance(initial_belief, (list, tuple)) or not initial_belief or len(initial_belief) != 3:
             messagebox.showerror("Error", f"Failed to initialize valid belief states for {algorithm}.",
-                                 parent=self.root)
+                                parent=self.root)
             return
 
         initial_belief = [
@@ -332,46 +334,51 @@ class UI:
             messagebox.showerror("Error", f"Failed to load background image: {str(e)}")
 
         tk.Label(belief_window, text=f"{algorithm} State Search", font=("Comic Sans MS", 30, "bold"),
-                 bg="#FFFFFF", fg="#FF0000").pack(pady=10)
+                bg="#FFFFFF", fg="#424242").pack(pady=10)
 
-        main_frame = tk.Frame(belief_window, bg="#FFFFE0")
+        # Khung chính: màu hồng
+        main_frame = tk.Frame(belief_window, bg="#F8BBD0")
         main_frame.pack(pady=10, padx=20)
 
         belief_frames = []
         belief_cells = []
         for i in range(3):
-            frame = tk.Frame(main_frame, bg="#FFFFE0", bd=2, relief=tk.SUNKEN)
+            # Khung belief: màu hồng
+            frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
             frame.grid(row=0, column=i, padx=5, pady=5)
             state = self.algorithm_handler.algorithm.tuple_to_list_state(initial_belief[i])
+            # Các ô: màu tím nhạt
             cells = [tk.Label(frame, text="" if state[j] == 0 else str(state[j]),
-                              width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#33ACFF",
-                              fg="#E83D30", relief=tk.RAISED, borderwidth=2)
-                     for j in range(9)]
+                            width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#E1BEE7",
+                            fg="#424242", relief=tk.RAISED, borderwidth=2)
+                    for j in range(9)]
             for j, cell in enumerate(cells):
                 cell.grid(row=j // 3, column=j % 3, padx=1, pady=1)
             belief_frames.append(frame)
             belief_cells.append(cells)
             tk.Label(main_frame, text=f"Belief {i + 1}", font=("Comic Sans MS", 10, "bold"),
-                     bg="#FFFFE0", fg="#00FF00").grid(row=1, column=i)
+                    bg="#F8BBD0", fg="#424242").grid(row=1, column=i)
 
-        goal_frame = tk.Frame(main_frame, bg="#FFFFE0", bd=2, relief=tk.SUNKEN)
+        # Khung mục tiêu: màu hồng
+        goal_frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
         goal_frame.grid(row=0, column=3, padx=20, pady=10)
-        goal_cells = [tk.Label(goal_frame, text=str(self.goal_state[i]) if self.goal_state[i] else "",
-                               width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#33ACFF",
-                               fg="#E83D30", relief=tk.RAISED, borderwidth=2)
-                      for i in range(9)]
+        # Các ô mục tiêu: màu tím nhạt
+        goal_cells = [tk.Label(goal_frame, text="" if self.goal_state[i] == 0 else str(self.goal_state[i]),
+                            width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#E1BEE7",
+                            fg="#424242", relief=tk.RAISED, borderwidth=2)
+                    for i in range(9)]
         for i, cell in enumerate(goal_cells):
             cell.grid(row=i // 3, column=i % 3, padx=1, pady=1)
         tk.Label(main_frame, text="Goal State", font=("Comic Sans MS", 12, "bold"),
-                 bg="#FFFFE0", fg="#00FF00").grid(row=1, column=3)
+                bg="#F8BBD0", fg="#424242").grid(row=1, column=3)
 
         info_frame = tk.Frame(belief_window, bg="#f0f0f0")
         info_frame.pack(pady=10)
         time_label = tk.Label(info_frame, text="Running Time: 0.00 ms", font=("Comic Sans MS", 12),
-                              bg="#f0f0f0", fg="#008000")
+                            bg="#f0f0f0", fg="#424242")
         time_label.pack()
         steps_label = tk.Label(info_frame, text="Steps: 0", font=("Comic Sans MS", 12),
-                               bg="#f0f0f0", fg="#008000")
+                            bg="#f0f0f0", fg="#424242")
         steps_label.pack()
 
         button_frame = tk.Frame(belief_window, bg="#f0f0f0")
