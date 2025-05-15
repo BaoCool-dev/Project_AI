@@ -42,9 +42,12 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 
 ![Image](https://github.com/user-attachments/assets/478b00ae-f617-4504-af10-b718c7391bbe)
 
+<<<<<<< HEAD
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
 ![Image](https://github.com/user-attachments/assets/bb127d71-7ae9-45fe-be61-a718323bf1dd)
+=======
+>>>>>>> f6a90b893f5a9c645ff0a425b49c992e8a6b3018
 
 ### Đánh giá các thuật toán:
 
