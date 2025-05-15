@@ -42,6 +42,7 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 
 ![Image](https://github.com/user-attachments/assets/478b00ae-f617-4504-af10-b718c7391bbe)
 
+
 ### Đánh giá các thuật toán:
 
 - Breadth-First Search (BFS): BFS mở rộng các trạng thái theo từng tầng, đảm bảo tìm được lời giải ngắn nhất khi chi phí mỗi bước là như nhau. Tuy nhiên, do phải lưu toàn bộ trạng thái cùng cấp độ, lượng bộ nhớ tiêu tốn tăng theo cấp số nhân theo độ sâu, gây khó khăn khi giải quyết bài toán có không gian lớn và sâu.
@@ -311,4 +312,5 @@ Không gian trạng thái gồm tất cả các cấu hình hợp lệ của lư
 
 - Bổ sung các thuật toán nâng cao như AND-OR Search, Belief State Search, Partial Observable Search với khả năng xử lý môi trường không chắc chắn (uncertainty).
 
+# Tác giả: Lê Hồ Chí Bảo
 
