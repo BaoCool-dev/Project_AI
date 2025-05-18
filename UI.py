@@ -346,7 +346,6 @@ class UI:
             frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
             frame.grid(row=0, column=i, padx=5, pady=5)
             state = self.algorithm_handler.algorithm.tuple_to_list_state(initial_belief[i])
-            # Các ô: màu tím nhạt
             cells = [tk.Label(frame, text="" if state[j] == 0 else str(state[j]),
                             width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#E1BEE7",
                             fg="#424242", relief=tk.RAISED, borderwidth=2)

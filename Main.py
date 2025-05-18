@@ -95,7 +95,6 @@ class Main:
                 else:
                     if isinstance(result, tuple) and len(result) == 2:
                         solution, explored_states = result
-                        # Tính steps cho CSP (số ô được gán thành công)
                         if algorithm_name in ["Backtrack", "Forward"] and solution:
                             steps = sum(1 for state in solution[-1] if state is not None) - 1
                             path_length = len(solution)

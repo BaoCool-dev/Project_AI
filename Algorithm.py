@@ -34,7 +34,7 @@ class algorithm:
             raise ValueError("Invalid state: Must contain exactly numbers 0 to 8.")
         idx = state.index(0)
         row, col = divmod(idx, 3)
-        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  # Lên, xuống, trái, phải
+        directions = [(-1, 0), (1, 0), (0, -1), (0, 1)]  
         successors = []
         for dr, dc in directions:
             new_row, new_col = row + dr, col + dc
@@ -343,12 +343,12 @@ class algorithm:
         def explore(state, path, visited, depth_limit):
             if time.time() - start_time > timeout:
                 return None, explored_states
-            explored_states.add(state)  # Sử dụng set để tránh trùng lặp
+            explored_states.add(state)  
             if self.is_goal(state):
                 return path + [state], explored_states
             if depth_limit == 0:
                 return None, explored_states
-            visited.add(state)  # Trạng thái đã là tuple
+            visited.add(state)  
             for succ in self.get_successors(state):
                 if succ not in visited:
                     solution, sub_explored = explore(succ, path + [succ], visited, depth_limit - 1)
@@ -359,7 +359,7 @@ class algorithm:
             return None, explored_states
 
         depth = 0
-        explored_states = set()  # Sử dụng set để tối ưu bộ nhớ
+        explored_states = set()  
         while True:
             if time.time() - start_time > timeout:
                 print("Timeout reached")
@@ -371,13 +371,11 @@ class algorithm:
                 print(f"Solution found at depth {depth}")
                 return solution, list(explored_states)
             depth += 1
-            # Giới hạn độ sâu tối đa để tránh chạy quá lâu
-            if depth > 100:  # Có thể điều chỉnh
+            if depth > 100: 
                 print("Max depth reached")
                 return None, list(explored_states)
 
     def genetic_algorithm(self, timeout=10.0):
-        """Genetic Algorithm for 8-puzzle."""
         start_time = time.time()
         population_size = 100
         generations = 500
@@ -504,7 +502,7 @@ class algorithm:
         visited = {start_state}
         states = set()
 
-        while queue and len(states) < 3:  # Chỉ cần 3 trạng thái
+        while queue and len(states) < 3:  
             state, depth = queue.popleft()
             if depth < max_depth:
                 for neighbor in self.get_successors(state):
@@ -629,7 +627,6 @@ class algorithm:
                     if action < len(neighbors):
                         next_state = neighbors[action]
                         new_belief.add(next_state)
-                        # Thêm uncertainty giống POS
                         if random.random() < 0.1:
                             next_neighbors = self.get_successors(next_state)
                             if next_neighbors and isinstance(next_neighbors, (list, tuple)):
@@ -769,12 +766,10 @@ class algorithm:
             goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             values = sorted(domains[pos], key=lambda x: abs(x - goal_state[pos]))
             for val in values:
-                # Gán giá trị
                 state[pos] = val
                 new_domains = update_domains(state, domains, pos, val)
 
                 if is_valid_state(state) and is_domains_valid(new_domains, state):
-                    # Tiếp tục với ô tiếp theo
                     result, sub_explored = forward_check(state, path, new_domains, pos + 1)
                     explored_states.update(sub_explored)
                     if result:
@@ -872,7 +867,7 @@ class algorithm:
     def q_learning_search(self, timeout=10.0):
         start_time = time.time()
         Q = {}
-        actions = [0, 1, 2, 3]  # 0: up, 1: down, 2: right, 3: left
+        actions = [0, 1, 2, 3]  
         state = tuple(self.initial_state)
         path = [list(state)]
         explored_states = [list(state)]
