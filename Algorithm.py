@@ -11,25 +11,21 @@ class algorithm:
         self.initial_state = initial_state
         self.goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
     def list_to_tuple_state(self, flat_state):
-        """Chuyển đổi danh sách phẳng thành tuple của tuple."""
         if len(flat_state) != 9:
             raise ValueError("Invalid state length")
         return tuple(tuple(flat_state[i * 3:(i + 1) * 3]) for i in range(3))
 
     def tuple_to_list_state(self, tuple_state):
-        """Chuyển đổi tuple của tuple thành danh sách phẳng."""
         return [num for row in tuple_state for num in row]
 
     def is_goal(self, state):
-        """Kiểm tra xem trạng thái có phải là trạng thái mục tiêu hay không."""
         goal_state = self.goal_state
-        if isinstance(state, tuple):  # Nếu là tuple của tuple
+        if isinstance(state, tuple):  
             state = self.tuple_to_list_state(state)
             goal_state = self.tuple_to_list_state(self.list_to_tuple_state(goal_state))
         return state == goal_state
 
     def get_successors(self, state):
-        """Tạo danh sách các trạng thái kế tiếp."""
         is_tuple = isinstance(state, tuple)
         if is_tuple:
             state = self.tuple_to_list_state(state)
@@ -50,7 +46,6 @@ class algorithm:
         return successors
 
     def is_solvable(self, state):
-        """Kiểm tra xem trạng thái có thể giải được hay không."""
         if isinstance(state, tuple):
             state = self.tuple_to_list_state(state)
         inversions = 0
@@ -62,7 +57,6 @@ class algorithm:
         return inversions % 2 == 0
 
     def heuristic(self, state):
-        """Tính heuristic Manhattan."""
         if isinstance(state, tuple):
             state = self.tuple_to_list_state(state)
         goal_position = {1: (0, 0), 2: (0, 1), 3: (0, 2), 4: (1, 0), 5: (1, 1),
@@ -71,7 +65,6 @@ class algorithm:
                 for val, (r, c) in [(state[i], divmod(i, 3)) for i in range(9)])
 
     def hamming_distance(self, state):
-        """Calculates Hamming distance."""
         distance = 0
         for i in range(9):
             if state[i] != 0 and state[i] != self.goal_state[i]:
@@ -79,7 +72,6 @@ class algorithm:
         return distance
 
     def bfs(self, timeout=10.0):
-        """Breadth-First Search."""
         start_time = time.time()
         queue = Queue()
         queue.put((self.initial_state, []))
@@ -100,7 +92,7 @@ class algorithm:
 
     def dfs(self, timeout=30.0, max_depth=20):
         start_time = time.time()
-        stack = [(self.initial_state, [], 0)]  # Thêm độ sâu vào stack
+        stack = [(self.initial_state, [], 0)]
         visited = {tuple(self.initial_state)}
         explored_states = [self.initial_state]
         while stack:
@@ -118,7 +110,6 @@ class algorithm:
         return None, explored_states
 
     def ucs(self, timeout=10.0):
-        """Uniform Cost Search."""
         start_time = time.time()
         queue = PriorityQueue()
         queue.put((0, self.initial_state, []))
@@ -138,7 +129,6 @@ class algorithm:
         return None, explored_states
 
     def ids(self, timeout=10.0):
-        """Iterative Deepening Search."""
         start_time = time.time()
         depth = 0
         explored_states = []
@@ -152,7 +142,6 @@ class algorithm:
             depth += 1
 
     def _dls(self, state, path, visited, depth_limit):
-        """Depth-Limited Search helper for IDS."""
         explored_states = [state]
         if self.is_goal(state):
             return path + [state], explored_states
@@ -169,7 +158,6 @@ class algorithm:
         return None, explored_states
 
     def a_star(self, timeout=10.0):
-        """A* Search."""
         start_time = time.time()
         queue = PriorityQueue()
         queue.put((self.heuristic(self.initial_state), self.initial_state, []))
@@ -190,7 +178,6 @@ class algorithm:
         return None, explored_states
 
     def ida_star(self, timeout=10.0):
-        """IDA* Search."""
         start_time = time.time()
         threshold = self.heuristic(self.initial_state)
         explored_states = []
@@ -205,7 +192,6 @@ class algorithm:
             threshold = new_threshold
 
     def _ida_dls(self, state, path, visited, threshold, explored_states):
-        """Depth-Limited Search helper for IDA*."""
         explored_states.append(state)
         f_value = len(path) + self.heuristic(state)
         if f_value > threshold:
@@ -225,7 +211,6 @@ class algorithm:
         return None, min_threshold
 
     def greedy_search(self, timeout=10.0):
-        """Greedy Best-First Search."""
         start_time = time.time()
         queue = PriorityQueue()
         queue.put((self.heuristic(self.initial_state), self.initial_state, []))
@@ -245,7 +230,6 @@ class algorithm:
         return None, explored_states
 
     def simple_hill_climbing(self, timeout=10.0):
-        """Simple Hill Climbing."""
         start_time = time.time()
         current_state = self.initial_state[:]
         path = [current_state]
@@ -264,7 +248,6 @@ class algorithm:
                 return path, explored_states
 
     def steepest_ascent_hill_climbing(self, timeout=10.0):
-        """Steepest Ascent Hill Climbing."""
         start_time = time.time()
         current_state = self.initial_state[:]
         path = [current_state]
@@ -283,7 +266,6 @@ class algorithm:
                 return path, explored_states
 
     def random_hill_climbing(self, timeout=10.0):
-        """Random Hill Climbing."""
         start_time = time.time()
         current_state = self.initial_state[:]
         path = [current_state]
@@ -303,7 +285,6 @@ class algorithm:
         return path if self.is_goal(current_state) else None, explored_states
 
     def simulated_annealing(self, timeout=10.0):
-        """Simulated Annealing."""
         start_time = time.time()
         current_state = self.initial_state[:]
         path = [current_state]
@@ -332,7 +313,6 @@ class algorithm:
         return path if self.is_goal(current_state) else None, explored_states
 
     def beam_search(self, timeout=10.0, k=2):
-        """Beam Search with beam width k."""
         start_time = time.time()
         from heapq import heappush, heappop
         beam = [(self.heuristic(self.initial_state), self.initial_state[:], [])]
@@ -351,20 +331,16 @@ class algorithm:
         return None, explored_states
 
     def and_or_search(self, timeout=10.0):
-        """And-Or Tree Search with Iterative Deepening."""
         start_time = time.time()
 
-        # Kiểm tra tính khả giải của trạng thái ban đầu
         if not self.is_solvable(self.initial_state):
             print("Initial state is not solvable")
             return None, []
 
-        # Chuyển initial_state sang tuple để nhất quán
         initial_state = self.list_to_tuple_state(self.initial_state) if isinstance(self.initial_state,
                                                                                    list) else self.initial_state
 
         def explore(state, path, visited, depth_limit):
-            """Khám phá trạng thái với giới hạn độ sâu."""
             if time.time() - start_time > timeout:
                 return None, explored_states
             explored_states.add(state)  # Sử dụng set để tránh trùng lặp
@@ -382,7 +358,6 @@ class algorithm:
             visited.remove(state)
             return None, explored_states
 
-        # Iterative Deepening
         depth = 0
         explored_states = set()  # Sử dụng set để tối ưu bộ nhớ
         while True:
@@ -455,7 +430,6 @@ class algorithm:
         return path + [best_individual] if self.is_goal(best_individual) else None, explored_states
 
     def bfs_for_belief(self, start_state, max_depth=10):
-        """Chạy BFS để tìm các trạng thái lân cận trong max_depth bước."""
         start_state = self.list_to_tuple_state(start_state) if isinstance(start_state, list) else start_state
         queue = deque([(start_state, 0)])
         visited = {start_state}
@@ -471,7 +445,6 @@ class algorithm:
                         states.add(neighbor)
         return list(states)
     def optimized_bfs_for_belief(self, start_state, max_depth=1):
-        """Tối ưu hóa BFS để tìm các trạng thái lân cận tốt nhất theo heuristic."""
         start_state = self.list_to_tuple_state(start_state) if isinstance(start_state, list) else start_state
         queue = deque([(start_state, 0)])
         visited = {start_state}
@@ -489,7 +462,6 @@ class algorithm:
         states.sort()
         return {state for _, state in states[:10]}
     def get_observation(self, state):
-        """Trả về vị trí (row, col) của ô số 1."""
         state = self.tuple_to_list_state(state) if isinstance(state, tuple) else state
         for i in range(9):
             if state[i] == 1:
@@ -497,7 +469,6 @@ class algorithm:
                 return (row, col)
         return None
     def find_states_with_one_at_00(self, start_state, max_states=3):
-        """Tìm các trạng thái có số 1 ở vị trí (0,0)."""
         start_state = self.list_to_tuple_state(start_state) if isinstance(start_state, list) else start_state
         queue = deque([(start_state, [])])
         visited = {start_state}
@@ -528,7 +499,6 @@ class algorithm:
     
 
     def bfs_for_belief(self, start_state, max_depth=10):
-        """Chạy BFS để tìm các trạng thái lân cận trong max_depth bước."""
         start_state = self.list_to_tuple_state(start_state) if isinstance(start_state, list) else start_state
         queue = deque([(start_state, 0)])
         visited = {start_state}
@@ -543,7 +513,6 @@ class algorithm:
                         queue.append((neighbor, depth + 1))
                         states.add(neighbor)
 
-        # Nếu không đủ 3 trạng thái, tạo ngẫu nhiên các trạng thái hợp lệ
         while len(states) < 3:
             numbers = list(range(9))
             random.shuffle(numbers)
@@ -555,7 +524,6 @@ class algorithm:
         return list(states)[:3]
 
     def partial_observable_search(self, initial_belief, timeout=10.0):
-        """Tìm kiếm Partial Observable với số 1 ở (0,0)."""
         start_time = time.time()
         if not initial_belief or len(initial_belief) != 3 or not all(self.get_observation(state) == (0, 0) for state in initial_belief):
             return None, [], 0
@@ -608,16 +576,13 @@ class algorithm:
         return None, explored_states, 0
 
     def belief_state_search(self, initial_belief, timeout=10.0):
-        """Tìm kiếm Belief State với tối đa 5 trạng thái, mô phỏng độ phức tạp giống POS."""
         start_time = time.time()
 
-        # Kiểm tra và log giá trị của initial_belief
         print(f"Initial belief in belief_state_search: {initial_belief}")
         if not isinstance(initial_belief, (list, tuple, set)) or not initial_belief or len(initial_belief) != 3:
             print(f"Error: initial_belief is invalid: {initial_belief}")
             return None, [], 0
 
-        # Chuyển đổi initial_belief sang tuple của tuple
         try:
             initial_belief = [self.list_to_tuple_state(state) if isinstance(state, list) else state for state in
                               initial_belief]
@@ -645,7 +610,6 @@ class algorithm:
                 continue
             visited.add(belief_state_tuple)
 
-            # Yêu cầu tất cả trạng thái đạt mục tiêu, giống POS
             if all(self.is_goal(state) for state in belief_state):
                 total_steps = steps
                 belief_states_path.append([self.list_to_tuple_state(self.goal_state)] * len(initial_belief))
@@ -674,7 +638,6 @@ class algorithm:
                                     new_belief.add(uncertain_state)
 
                 if new_belief:
-                    # Tăng giới hạn belief state lên 5 để tăng độ phức tạp
                     new_belief = set(sorted(new_belief, key=self.heuristic)[:5])
                     print(
                         f"New belief size: {len(new_belief)}, Heuristic avg: {sum(self.heuristic(s) for s in new_belief) / len(new_belief) if new_belief else 0}")
@@ -693,11 +656,9 @@ class algorithm:
         return None, list(explored), 0
 
     def backtracking_search(self, timeout=10.0):
-        """Backtracking Search as CSP for 8-puzzle, starting from empty board."""
         start_time = time.time()
 
         def is_valid_state(state):
-            """Kiểm tra trạng thái không có số trùng lặp."""
             used = set()
             for val in state:
                 if val is not None and val in used:
@@ -707,57 +668,45 @@ class algorithm:
             return True
 
         def is_complete(state):
-            """Kiểm tra trạng thái đã đầy đủ (9 ô)."""
             return all(val is not None for val in state)
 
         def backtrack(state, path, used_values, pos):
-            """Quay lui để điền số vào ô."""
             if time.time() - start_time > timeout:
                 print("Timeout reached")
                 return None, explored_states
 
-            # Thêm trạng thái vào explored_states
             state_tuple = tuple(state)
             explored_states.add(state_tuple)
             path.append(state[:])
 
-            # Nếu trạng thái đầy đủ, kiểm tra mục tiêu
             if is_complete(state):
                 if self.is_solvable(state) and self.is_goal(state):
                     print(f"Solution found: {state}")
                     return path, explored_states
                 return None, explored_states
 
-            # Chọn ô tiếp theo để gán
             if pos >= 9:
                 return None, explored_states
-
-            # Thử gán các giá trị từ 0-8
-            # Ưu tiên giá trị theo heuristic (gần với mục tiêu)
+                
             goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             values = sorted(range(9), key=lambda x: abs(x - goal_state[pos]) if x not in used_values else float('inf'))
             for val in values:
                 if val not in used_values:
-                    # Gán giá trị
                     state[pos] = val
                     used_values.add(val)
 
-                    # Kiểm tra ràng buộc
                     if is_valid_state(state):
-                        # Tiếp tục với ô tiếp theo
                         result, sub_explored = backtrack(state, path, used_values, pos + 1)
                         explored_states.update(sub_explored)
                         if result:
                             return result, explored_states
 
-                    # Quay lui: bỏ gán giá trị
                     state[pos] = None
                     used_values.remove(val)
 
             return None, explored_states
 
-        # Khởi tạo trạng thái rỗng
-        initial_state = [None] * 9  # Ma trận rỗng
+        initial_state = [None] * 9  
         explored_states = set()
         path = []
 
@@ -772,11 +721,9 @@ class algorithm:
             return None, list(explored)
 
     def forward_checking_search(self, timeout=10.0):
-        """Forward Checking Search as CSP for 8-puzzle, starting from empty board."""
         start_time = time.time()
 
         def is_valid_state(state):
-            """Kiểm tra trạng thái không có số trùng lặp."""
             used = set()
             for val in state:
                 if val is not None and val in used:
@@ -786,58 +733,46 @@ class algorithm:
             return True
 
         def is_complete(state):
-            """Kiểm tra trạng thái đã đầy đủ (9 ô)."""
             return all(val is not None for val in state)
 
         def update_domains(state, domains, pos, value):
-            """Cập nhật miền giá trị sau khi gán giá trị."""
             new_domains = copy.deepcopy(domains)
-            # Loại bỏ giá trị vừa gán khỏi miền của các ô chưa gán
             for i in range(9):
                 if state[i] is None and value in new_domains[i]:
                     new_domains[i].remove(value)
             return new_domains
 
         def is_domains_valid(domains, state):
-            """Kiểm tra xem miền của các ô chưa gán có hợp lệ (không rỗng)."""
             for i in range(9):
                 if state[i] is None and not domains[i]:
                     return False
             return True
 
         def forward_check(state, path, domains, pos):
-            """Quay lui với Forward Checking để điền số vào ô."""
             if time.time() - start_time > timeout:
                 print("Timeout reached")
                 return None, explored_states
 
-            # Thêm trạng thái vào explored_states
             state_tuple = tuple(None if x is None else x for x in state)
             explored_states.add(state_tuple)
-            path.append(copy.deepcopy(state))  # Sao chép sâu để tránh thay đổi
+            path.append(copy.deepcopy(state)) 
 
-            # Nếu trạng thái đầy đủ, kiểm tra mục tiêu
             if is_complete(state):
                 if self.is_solvable(state) and self.is_goal(state):
                     print(f"Solution found: {state}")
                     return path, explored_states
                 return None, explored_states
 
-            # Chọn ô tiếp theo để gán
             if pos >= 9:
                 return None, explored_states
 
-            # Thử gán các giá trị từ miền của ô hiện tại
-            # Ưu tiên giá trị theo heuristic (gần với mục tiêu)
             goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
             values = sorted(domains[pos], key=lambda x: abs(x - goal_state[pos]))
             for val in values:
                 # Gán giá trị
                 state[pos] = val
-                # Cập nhật miền giá trị
                 new_domains = update_domains(state, domains, pos, val)
 
-                # Kiểm tra ràng buộc và miền
                 if is_valid_state(state) and is_domains_valid(new_domains, state):
                     # Tiếp tục với ô tiếp theo
                     result, sub_explored = forward_check(state, path, new_domains, pos + 1)
@@ -845,13 +780,11 @@ class algorithm:
                     if result:
                         return result, explored_states
 
-                # Quay lui: bỏ gán giá trị
                 state[pos] = None
 
-            path.pop()  # Xóa trạng thái khỏi path khi quay lui
+            path.pop() 
             return None, explored_states
 
-        # Khởi tạo trạng thái rỗng và miền giá trị
         initial_state = [None] * 9
         initial_domains = {i: list(range(9)) for i in range(9)}
         explored_states = set()
@@ -868,33 +801,26 @@ class algorithm:
             return None, list(explored)
 
     def min_conflicts_search(self, timeout=10.0, max_steps=1000):
-        """Min-Conflicts Search as CSP for 8-puzzle, using valid moves."""
         start_time = time.time()
         goal_state = [1, 2, 3, 4, 5, 6, 7, 8, 0]
         explored_states = set()
-        max_attempts = 50  # Tăng số lần thử để cải thiện khả năng tìm giải pháp
+        max_attempts = 50 
 
         def initialize_state():
-            """Tạo trạng thái ngẫu nhiên khả giải."""
             state = goal_state[:]
-            # Thực hiện các di chuyển ngẫu nhiên từ trạng thái mục tiêu
-            for _ in range(100):  # Tạo trạng thái ngẫu nhiên bằng 100 di chuyển
+            for _ in range(100):  
                 successors = self.get_successors(state)
                 state = random.choice(successors)
             return state
 
         def count_conflicts(state):
-            """Tính tổng khoảng cách Manhattan và số ô không khớp."""
             hamming = sum(1 for i in range(9) if state[i] != goal_state[i] and state[i] != 0)
             manhattan = self.heuristic(state)
-            return manhattan + hamming  # Kết hợp để ưu tiên trạng thái tốt hơn
-
+            return manhattan + hamming  
         def get_conflicted_vars(state):
-            """Trả về danh sách các ô có xung đột (không khớp với goal_state)."""
             return [i for i in range(9) if state[i] != goal_state[i] and state[i] != 0]
 
         def get_min_conflict_move(state):
-            """Tìm di chuyển của ô trống dẫn đến trạng thái có ít xung đột nhất."""
             zero_idx = state.index(0)
             successors = self.get_successors(state)
             if not successors:
@@ -903,7 +829,7 @@ class algorithm:
             min_conflicts = float('inf')
             best_state = None
             for succ in successors:
-                if self.is_solvable(succ):  # Chỉ xem xét trạng thái khả giải
+                if self.is_solvable(succ): 
                     conflicts = count_conflicts(succ)
                     if conflicts < min_conflicts:
                         min_conflicts = conflicts
@@ -915,27 +841,23 @@ class algorithm:
                 print("Timeout reached")
                 return None, list(explored_states)
 
-            # Khởi tạo trạng thái ngẫu nhiên khả giải
             state = initialize_state()
             path = [state[:]]
             explored_states.add(tuple(state))
             print(f"Attempt {attempt + 1}: Initial state: {state}")
 
-            # Lặp tối đa max_steps để giảm xung đột
             for step in range(max_steps):
                 if time.time() - start_time > timeout:
                     print("Timeout reached")
                     return None, list(explored_states)
 
-                # Kiểm tra nếu trạng thái là giải pháp
                 if self.is_goal(state):
                     print(f"Solution found: {state}")
                     return path, list(explored_states)
 
-                # Tìm di chuyển tốt nhất cho ô trống
                 best_state, conflicts = get_min_conflict_move(state)
                 if best_state is None:
-                    break  # Không tìm thấy di chuyển khả thi, khởi động lại
+                    break
 
                 state = best_state[:]
                 path.append(state[:])
@@ -948,7 +870,6 @@ class algorithm:
         return None, list(explored_states)
 
     def q_learning_search(self, timeout=10.0):
-        """Q-Learning Search."""
         start_time = time.time()
         Q = {}
         actions = [0, 1, 2, 3]  # 0: up, 1: down, 2: right, 3: left
