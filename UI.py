@@ -301,7 +301,7 @@ class UI:
         ]
         if algorithm == "Belief":
             initial_belief = self.algorithm_handler.algorithm.bfs_for_belief(self.puzzle_numbers)
-        else:  # POS
+        else: 
             initial_belief = self.algorithm_handler.algorithm.find_states_with_one_at_00(self.puzzle_numbers)
 
         if not isinstance(initial_belief, (list, tuple)) or not initial_belief or len(initial_belief) != 3:
@@ -336,14 +336,13 @@ class UI:
         tk.Label(belief_window, text=f"{algorithm} State Search", font=("Comic Sans MS", 30, "bold"),
                 bg="#FFFFFF", fg="#424242").pack(pady=10)
 
-        # Khung chính: màu hồng
+ 
         main_frame = tk.Frame(belief_window, bg="#F8BBD0")
         main_frame.pack(pady=10, padx=20)
 
         belief_frames = []
         belief_cells = []
         for i in range(3):
-            # Khung belief: màu hồng
             frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
             frame.grid(row=0, column=i, padx=5, pady=5)
             state = self.algorithm_handler.algorithm.tuple_to_list_state(initial_belief[i])
@@ -359,10 +358,8 @@ class UI:
             tk.Label(main_frame, text=f"Belief {i + 1}", font=("Comic Sans MS", 10, "bold"),
                     bg="#F8BBD0", fg="#424242").grid(row=1, column=i)
 
-        # Khung mục tiêu: màu hồng
         goal_frame = tk.Frame(main_frame, bg="#F8BBD0", bd=2, relief=tk.SUNKEN)
         goal_frame.grid(row=0, column=3, padx=20, pady=10)
-        # Các ô mục tiêu: màu tím nhạt
         goal_cells = [tk.Label(goal_frame, text="" if self.goal_state[i] == 0 else str(self.goal_state[i]),
                             width=4, height=2, font=("Comic Sans MS", 14, "bold"), bg="#E1BEE7",
                             fg="#424242", relief=tk.RAISED, borderwidth=2)
