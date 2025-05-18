@@ -45,7 +45,7 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 <<<<<<< HEAD
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
-![Image](https://github.com/user-attachments/assets/bb127d71-7ae9-45fe-be61-a718323bf1dd)
+![Image](https://github.com/user-attachments/assets/98f11e04-7a56-45d4-9708-f1637860b076)
 =======
 >>>>>>> f6a90b893f5a9c645ff0a425b49c992e8a6b3018
 
@@ -95,7 +95,7 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
-![Image](https://github.com/user-attachments/assets/b64de2e7-ab47-4ff3-9aee-eac4fa27c2d6)
+![Image](https://github.com/user-attachments/assets/71090a2a-16b3-47f3-a307-73c89e0380e7)
 
 ### Đánh giá các thuật toán:
 - Greedy Search: Mở rộng các trạng thái có giá trị heuristic nhỏ nhất (h(n)), giúp giải nhanh và giảm số trạng thái phải duyệt. Tuy nhiên, do bỏ qua chi phí đi qua (g(n)), thuật toán dễ chọn sai đường, bị kẹt tại cực trị cục bộ.
@@ -147,7 +147,7 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
-![Image](https://github.com/user-attachments/assets/2272173a-5062-4bec-8c0c-26dd73fc481d)
+![Image](https://github.com/user-attachments/assets/9bb69067-88c9-408d-97ab-46ee078b2c88)
 
 ### Đánh giá các thuật toán:
 
@@ -203,7 +203,7 @@ Mục tiêu của dự án 8-Puzzle là xây dựng một hệ thống giải b�
 
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
-![Image](https://github.com/user-attachments/assets/7074e5ad-a1ac-42dd-801f-908711c6e8cf)
+![Image](https://github.com/user-attachments/assets/f6f74bdb-5b9c-4d72-bb58-9d284923cdf0)
 
 ### Đánh giá các thuật toán:
 - AND-OR Search: Không dùng heuristic, mỗi hành động có thể dẫn đến nhiều kết quả → cây tìm kiếm rất lớn. Tuy nhiên, chi phí xử lý từng trạng thái thấp, thời gian chạy tổng thể nhanh.
@@ -269,7 +269,7 @@ Trong đó, số 0 đại diện cho ô trống.
 
 ### Hình ảnh so sánh hiệu suất các thuật toán
 
-![Image](https://github.com/user-attachments/assets/6ff7542a-e78d-497a-8531-d7ba7e5e736e)
+![Image](https://github.com/user-attachments/assets/8abf804d-3105-443b-bc1b-3e6bb5e1a8a6)
 
 ### Đánh giá các thuật toán:
 - Backtracking Search: Phương pháp duyệt theo chiều sâu, gán từng giá trị cho các ô theo thứ tự và kiểm tra tính hợp lệ ngay sau mỗi bước. Nếu phát hiện xung đột, thuật toán sẽ quay lui để thử giá trị khác. Tuy có khả năng liệt kê đầy đủ mọi khả năng, nhưng không hiệu quả với không gian lớn do không có cơ chế loại trừ sớm.
@@ -315,7 +315,7 @@ Không gian trạng thái gồm tất cả các cấu hình hợp lệ của lư
 
 ### Hình ảnh hiệu suất thuật toán
 
-![Image](https://github.com/user-attachments/assets/eac53c92-482f-4185-bc34-985eb02500c8)
+![Image](https://github.com/user-attachments/assets/0dd98d55-f06b-4cfc-a49f-912a2259ab99)
 
 ### Đánh giá thuật toán:
 - Q-Learning là một thuật toán học tăng cường không cần mô hình (model-free), nơi agent học thông qua thử - sai thay vì dựa vào mô hình môi trường.
